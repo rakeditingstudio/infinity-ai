@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090b14">
+<title>INFINITY AI — Powered by RAK Editing Studio</title>
+<style>
+:root{color-scheme:dark;--bg:#090b14;--panel:#111522;--line:#252b3e;--gold:#e8c56b;--muted:#a8afc2}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#191b30 0%,var(--bg) 58%);color:#f5f6fb;font:16px system-ui,-apple-system,Segoe UI,sans-serif;min-height:100dvh}
+.app{max-width:850px;margin:auto;min-height:100dvh;display:flex;flex-direction:column;padding:16px;padding-bottom:env(safe-area-inset-bottom)}
+header{display:flex;align-items:center;gap:12px;padding:10px 0 18px;border-bottom:1px solid var(--line)}
+.logo{width:46px;height:46px;border-radius:15px;background:linear-gradient(135deg,#f8df91,#9b6e1d);display:grid;place-items:center;color:#10121a;font-weight:900;font-size:20px;box-shadow:0 5px 25px #d9b45130}
+h1{font-size:20px;letter-spacing:2px;margin:0}header p{margin:3px 0 0;color:var(--muted);font-size:12px}
+.status{margin-left:auto;border:1px solid #275d4d;color:#8ee0b5;border-radius:999px;padding:5px 9px;font-size:11px;white-space:nowrap}
+.hero{padding:24px 4px 12px}.hero h2{font-size:clamp(24px,6vw,34px);margin:0 0 8px}.gold{color:var(--gold)}.hero p{color:var(--muted);line-height:1.5;margin:0}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.chip{background:#171b2b;color:#dce0f0;border:1px solid var(--line);border-radius:999px;padding:9px 12px;font-size:13px;cursor:pointer}
+.chat{flex:1;min-height:220px;margin:12px 0;display:flex;flex-direction:column;gap:12px}
+.msg{max-width:92%;padding:13px 15px;border-radius:17px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}.assistant{align-self:flex-start;background:var(--panel);border:1px solid var(--line);border-top-left-radius:5px}.user{align-self:flex-end;background:#2c2b38;border:1px solid #48404b;border-top-right-radius:5px}
+.composer{position:sticky;bottom:0;background:#090b14eF;padding:10px 0 12px}.form{display:flex;align-items:flex-end;gap:8px;background:#121625;border:1px solid #343b51;border-radius:20px;padding:8px}
+textarea{resize:none;flex:1;max-height:140px;min-height:42px;background:transparent;border:0;outline:0;color:#fff;padding:10px;font:inherit}button{font:inherit}.send{width:44px;height:44px;border:0;border-radius:14px;background:linear-gradient(135deg,#f8df91,#bd8c32);color:#16120a;font-weight:900;cursor:pointer}.send:disabled{opacity:.5}.note{color:#8d95aa;text-align:center;font-size:11px;line-height:1.5;margin:9px 8px 0}
+footer{text-align:center;color:#737c93;font-size:11px;padding:6px 0 10px}
+@media(min-width:650px){.app{padding:24px}.hero{padding-top:30px}.chat{gap:16px}.msg{max-width:82%}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="logo" aria-hidden="true">∞</div><div><h1>INFINITY <span class="gold">AI</span></h1><p>POWERED BY RAK EDITING STUDIO</p></div><span class="status">● STARTER</span></header>
+<section class="hero"><h2>Your ideas. <span class="gold">Infinite possibilities.</span></h2><p>Chat, brainstorm, write, and create. This starter interface needs a secure AI backend before it can provide real AI answers.</p><div class="chips"><button class="chip" data-prompt="Help me brainstorm a creative project.">✨ Brainstorm</button><button class="chip" data-prompt="Write a short video prompt for a cinematic scene.">🎬 Video prompt</button><button class="chip" data-prompt="Explain a difficult school topic in simple Hinglish.">📚 Learn</button></div></section>
+<main class="chat" id="chat" aria-live="polite"><div class="msg assistant">Welcome to INFINITY AI! 👋<br><br>Your interface is ready. Type a message to test the chat UI. Real AI replies will work after the Cloudflare Worker backend is connected.</div></main>
+<section class="composer"><form class="form" id="form"><textarea id="input" rows="1" maxlength="4000" placeholder="Message INFINITY..." aria-label="Message INFINITY"></textarea><button class="send" id="send" aria-label="Send message">↑</button></form><p class="note">Starter preview · Do not enter passwords or API keys here. Chat is not saved on a server.</p></section>
+<footer>INFINITY AI · Powered by RAK Editing Studio</footer>
+</div>
+<script>
+const chat=document.getElementById('chat'),input=document.getElementById('input'),form=document.getElementById('form'),send=document.getElementById('send');
+function add(text,kind){const el=document.createElement('div');el.className='msg '+kind;el.textContent=text;chat.appendChild(el);el.scrollIntoView({behavior:'smooth',block:'nearest'});return el}
+function submitMessage(text){const value=(text??input.value).trim();if(!value)return;add(value,'user');input.value='';input.style.height='auto';add('The chat interface received your message. Connect the Cloudflare Worker to enable real AI responses.','assistant')}
+form.addEventListener('submit',e=>{e.preventDefault();submitMessage()});
+input.addEventListener('input',()=>{input.style.height='auto';input.style.height=Math.min(input.scrollHeight,140)+'px'});
+document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click',()=>{input.value=b.dataset.prompt;input.focus();input.dispatchEvent(new Event('input'))}));
+</script>
+</body>
+</html>

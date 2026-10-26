@@ -1,7 +1,7 @@
 {
   "appId": "studio.rakediting.infinityai",
   "appName": "INFINITY AI",
-  "webDir": ".",
+  "webDir": "www",
   "bundledWebRuntime": false,
   "server": {
     "androidScheme": "https"

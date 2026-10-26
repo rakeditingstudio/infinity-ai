@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#090b14">
+<meta name="description" content="INFINITY AI — Powered by RAK Editing Studio">
 <title>INFINITY AI — Powered by RAK Editing Studio</title>
 <style>
 :root{color-scheme:dark;--bg:#090b14;--panel:#111522;--line:#252b3e;--gold:#e8c56b;--muted:#a8afc2}
@@ -17,24 +18,33 @@ h1{font-size:20px;letter-spacing:2px;margin:0}header p{margin:3px 0 0;color:var(
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.chip{background:#171b2b;color:#dce0f0;border:1px solid var(--line);border-radius:999px;padding:9px 12px;font-size:13px;cursor:pointer}
 .chat{flex:1;min-height:220px;margin:12px 0;display:flex;flex-direction:column;gap:12px}
 .msg{max-width:92%;padding:13px 15px;border-radius:17px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}.assistant{align-self:flex-start;background:var(--panel);border:1px solid var(--line);border-top-left-radius:5px}.user{align-self:flex-end;background:#2c2b38;border:1px solid #48404b;border-top-right-radius:5px}
-.composer{position:sticky;bottom:0;background:#090b14eF;padding:10px 0 12px}.form{display:flex;align-items:flex-end;gap:8px;background:#121625;border:1px solid #343b51;border-radius:20px;padding:8px}
+.composer{position:sticky;bottom:0;background:#090b14ef;padding:10px 0 12px}.form{display:flex;align-items:flex-end;gap:8px;background:#121625;border:1px solid #343b51;border-radius:20px;padding:8px}
 textarea{resize:none;flex:1;max-height:140px;min-height:42px;background:transparent;border:0;outline:0;color:#fff;padding:10px;font:inherit}button{font:inherit}.send{width:44px;height:44px;border:0;border-radius:14px;background:linear-gradient(135deg,#f8df91,#bd8c32);color:#16120a;font-weight:900;cursor:pointer}.send:disabled{opacity:.5}.note{color:#8d95aa;text-align:center;font-size:11px;line-height:1.5;margin:9px 8px 0}
+.settings{margin:10px 0;background:#111522;border:1px solid var(--line);border-radius:14px;padding:12px}.settings summary{cursor:pointer;color:var(--gold);font-size:13px}.settings label{display:block;color:var(--muted);font-size:12px;margin:12px 0 6px}.settings input{width:100%;background:#090b14;border:1px solid #343b51;border-radius:9px;color:#fff;padding:11px;font:inherit}.save{margin-top:10px;border:1px solid #75602d;background:#262113;color:var(--gold);border-radius:9px;padding:9px 12px;cursor:pointer}.footnote{font-size:11px;color:#8d95aa;line-height:1.5}
 footer{text-align:center;color:#737c93;font-size:11px;padding:6px 0 10px}
 @media(min-width:650px){.app{padding:24px}.hero{padding-top:30px}.chat{gap:16px}.msg{max-width:82%}}
 </style>
 </head>
 <body>
 <div class="app">
-<header><div class="logo" aria-hidden="true">∞</div><div><h1>INFINITY <span class="gold">AI</span></h1><p>POWERED BY RAK EDITING STUDIO</p></div><span class="status">● STARTER</span></header>
-<section class="hero"><h2>Your ideas. <span class="gold">Infinite possibilities.</span></h2><p>Chat, brainstorm, write, and create. This starter interface needs a secure AI backend before it can provide real AI answers.</p><div class="chips"><button class="chip" data-prompt="Help me brainstorm a creative project.">✨ Brainstorm</button><button class="chip" data-prompt="Write a short video prompt for a cinematic scene.">🎬 Video prompt</button><button class="chip" data-prompt="Explain a difficult school topic in simple Hinglish.">📚 Learn</button></div></section>
-<main class="chat" id="chat" aria-live="polite"><div class="msg assistant">Welcome to INFINITY AI! 👋<br><br>Your interface is ready. Type a message to test the chat UI. Real AI replies will work after the Cloudflare Worker backend is connected.</div></main>
-<section class="composer"><form class="form" id="form"><textarea id="input" rows="1" maxlength="4000" placeholder="Message INFINITY..." aria-label="Message INFINITY"></textarea><button class="send" id="send" aria-label="Send message">↑</button></form><p class="note">Starter preview · Do not enter passwords or API keys here. Chat is not saved on a server.</p></section>
+<header><div class="logo" aria-hidden="true">∞</div><div><h1>INFINITY <span class="gold">AI</span></h1><p>POWERED BY RAK EDITING STUDIO</p></div><span class="status" id="status">● NOT CONNECTED</span></header>
+<section class="hero"><h2>Your ideas. <span class="gold">Infinite possibilities.</span></h2><p>Chat, brainstorm, write, and learn with INFINITY AI.</p><div class="chips"><button class="chip" data-prompt="Help me brainstorm a creative project.">✨ Brainstorm</button><button class="chip" data-prompt="Write a short video prompt for a cinematic scene.">🎬 Video prompt</button><button class="chip" data-prompt="Explain a difficult school topic in simple Hinglish.">📚 Learn</button></div></section>
+<details class="settings"><summary>⚙ Connect Cloudflare AI backend</summary><label for="endpoint">Worker base URL (example: https://your-worker.workers.dev)</label><input id="endpoint" type="url" inputmode="url" placeholder="https://your-worker.workers.dev" autocomplete="url"><button class="save" id="save">Save connection</button><p class="footnote">Paste only your deployed Worker URL here—not an API key. The URL is saved on this device. API provider charges may apply.</p></details>
+<main class="chat" id="chat" aria-live="polite"><div class="msg assistant">Welcome to INFINITY AI! 👋
+
+Connect your Cloudflare Worker in Settings to enable real AI replies. Your chat messages are not saved to a server by this page.</div></main>
+<section class="composer"><form class="form" id="form"><textarea id="input" rows="1" maxlength="4000" placeholder="Message INFINITY..." aria-label="Message INFINITY"></textarea><button class="send" id="send" aria-label="Send message">↑</button></form><p class="note">Never enter passwords or API keys in chat. Responses require a configured AI provider.</p></section>
 <footer>INFINITY AI · Powered by RAK Editing Studio</footer>
 </div>
 <script>
-const chat=document.getElementById('chat'),input=document.getElementById('input'),form=document.getElementById('form'),send=document.getElementById('send');
+const chat=document.getElementById('chat'),input=document.getElementById('input'),form=document.getElementById('form'),send=document.getElementById('send'),endpointInput=document.getElementById('endpoint'),statusEl=document.getElementById('status');
+const KEY='infinity_ai_worker_url';
+function baseUrl(){return endpointInput.value.trim().replace(/\/+$/,'')}
+function setStatus(connected){statusEl.textContent=connected?'● CONNECTED':'● NOT CONNECTED';statusEl.style.color=connected?'#8ee0b5':'#f0bd82';}
+try{endpointInput.value=localStorage.getItem(KEY)||'';setStatus(!!endpointInput.value)}catch{setStatus(false)}
 function add(text,kind){const el=document.createElement('div');el.className='msg '+kind;el.textContent=text;chat.appendChild(el);el.scrollIntoView({behavior:'smooth',block:'nearest'});return el}
-function submitMessage(text){const value=(text??input.value).trim();if(!value)return;add(value,'user');input.value='';input.style.height='auto';add('The chat interface received your message. Connect the Cloudflare Worker to enable real AI responses.','assistant')}
+document.getElementById('save').addEventListener('click',async()=>{const base=baseUrl();if(!/^https:\/\/[a-z0-9.-]+(?::\d+)?$/i.test(base)){add('Please enter a valid HTTPS Worker base URL, such as https://your-worker.workers.dev','assistant');return}try{localStorage.setItem(KEY,base)}catch{};endpointInput.value=base;try{const r=await fetch(base+'/');if(!r.ok)throw Error('Worker check failed');const d=await r.json();if(d.name!=='INFINITY AI')throw Error('This URL did not identify as the INFINITY AI Worker');setStatus(true);add('Connected to INFINITY AI backend. You can now send a test message.','assistant')}catch(e){setStatus(false);add('URL saved, but the Worker could not be verified. Check that it is deployed and accessible, then try again.','assistant')}});
+async function submitMessage(text){const value=(text??input.value).trim();if(!value||send.disabled)return;const base=baseUrl();if(!base){add('First open “Connect Cloudflare AI backend” above and save your deployed Worker URL.','assistant');return}const history=[...chat.querySelectorAll('.msg')].slice(-12).map(el=>({role:el.classList.contains('user')?'user':'assistant',content:el.textContent}));add(value,'user');input.value='';input.style.height='auto';send.disabled=true;const loading=add('Thinking…','assistant');try{const response=await fetch(base+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:value,history})});const data=await response.json().catch(()=>({}));if(!response.ok)throw Error(data.error||'Request failed ('+response.status+')');loading.textContent=data.reply||'No response returned.';setStatus(true)}catch(e){loading.textContent='Could not get an AI reply. Check the Worker URL, deployment, API Secret settings, and provider access. Details: '+(e.message||'network error');setStatus(false)}finally{send.disabled=false;input.focus()}}
 form.addEventListener('submit',e=>{e.preventDefault();submitMessage()});
 input.addEventListener('input',()=>{input.style.height='auto';input.style.height=Math.min(input.scrollHeight,140)+'px'});
 document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click',()=>{input.value=b.dataset.prompt;input.focus();input.dispatchEvent(new Event('input'))}));
